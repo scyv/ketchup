@@ -1,0 +1,25 @@
+<head>
+    <title>Ketchup - Team Pomodoro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+
+<body></body>
+
+<template name="layout">
+    <div class="container-fluid">
+        <div class="row header">
+                <div class="col-sm-12">
+                <span class="home">// Ketchup</span>
+                {{#if currentUser}}
+                    <div class="pull-right tools">
+                        <i class="glyphicon glyphicon-hourglass btn-pomodoro"></i>
+                        <i class="glyphicon glyphicon-user btn-teams"></i>
+                        <i class="glyphicon glyphicon-log-out btn-logout"></i>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        {{> yield}}
+    </div>
+</template>

@@ -1,0 +1,38 @@
+/* CSS declarations go here */
+
+body {
+    padding-top: 6rem;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-weight: normal;
+}
+
+.input-group-addon.glyphicon {
+    top: 0;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.header {
+    background: #337ab7;
+    color: #ffffff;
+    font-weight: lighter;
+    padding: 1rem;
+    line-height: 2.5rem;
+    font-size: 2.5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.header .tools i {
+    margin-left: 1.5rem;
+}

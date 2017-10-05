@@ -1,0 +1,23 @@
+<template name="pomodoro">
+    {{#if pomodoroLoading}}
+        Laden...
+    {{else}}
+        <div class="row">
+            <div class="col-xs-12">
+                {{#if runningPomodoro}}
+                    {{#with runningPomodoro}}
+                        <button class="btn btn-interrupt">Unterbrechen</button>
+                        Läuft: {{formattedTime timeRunning}}
+                    {{/with}}
+                {{else}}
+                    <button class="btn btn-start">Start</button>
+                {{/if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                Pomodoros insgesamt: {{pomodoroCount}}
+            </div>
+        </div>
+    {{/if}}
+</template>

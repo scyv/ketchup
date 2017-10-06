@@ -24,15 +24,6 @@ Router.route("/teams", function () {
     }
 }, {name: "teams"});
 
-Router.route("/teams/:key", function () {
-    if (Meteor.userId()) {
-        Session.set("selectedTeam", this.params.key);
-        this.render("team");
-    } else {
-        this.render("login");
-    }
-}, {name: "team"});
-
 Router.route("/resetPasswordMailSent", function () {
     this.render("resetPasswordMailSent")
 }, {name: "resetPasswordMailSent"});

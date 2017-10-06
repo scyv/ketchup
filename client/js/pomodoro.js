@@ -1,5 +1,5 @@
-import { Template } from 'meteor/templating';
-import { pomodoroHandle } from './main';
+import { Template } from "meteor/templating";
+import { pomodoroHandle } from "./main";
 
 Template.pomodoro.helpers({
     pomodoroLoading() {
@@ -21,10 +21,10 @@ Template.pomodoro.helpers({
 });
 
 Template.pomodoro.events({
-    'click .btn-start'() {
+    "click .btn-start"() {
         Meteor.call("startPomodoro");
     },
-    'click .btn-interrupt'() {
+    "click .btn-interrupt"() {
         Meteor.call("stopPomodoro", "");
     }
 });

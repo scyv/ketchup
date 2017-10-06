@@ -4,6 +4,10 @@ body {
     padding-top: 6rem;
 }
 
+.home, .tools i {
+    cursor: pointer;
+}
+
 .row {
     margin-bottom: 10px;
 }
@@ -34,5 +38,12 @@ body {
 }
 
 .header .tools i {
+    color: #BBBBBB;
+    font-weight: normal;
     margin-left: 1.5rem;
+}
+
+.header .tools i.selected {
+    font-weight: bold;
+    color: #ffffff;
 }

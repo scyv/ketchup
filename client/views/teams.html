@@ -1,0 +1,23 @@
+<template name="teams">
+    {{#if teamsLoading}}
+        Laden...
+    {{else}}
+        {{#each teams}}
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-default btn-edit-team">Bearbeiten</button>
+                    <button class="btn btn-default btn-leave-team">Verlassen</button>
+                    <span class="team">{{name}}</span> - {{key}}
+                </div>
+            </div>
+        {{else}}
+
+        {{/each}}
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-success btn-create-team">Team erstellen</button>
+                <button class="btn btn-primary btn-join-team">Team beitreten</button>
+            </div>
+        </div>
+    {{/if}}
+</template>

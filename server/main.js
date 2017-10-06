@@ -12,7 +12,7 @@ Meteor.publish("pomodoros", function () {
         // find all pomodoros of all members of my teams (because i want to see them in the teams view)
         const teams = Teams.find({members: {$in: [this.userId]}});
         let pomodoroOwners = [this.userId];
-        teams.forEach(function (members) {
+        teams.forEach(function (team) {
             pomodoroOwners = _.union(pomodoroOwners, team.members);
         });
 

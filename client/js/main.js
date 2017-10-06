@@ -50,6 +50,8 @@ Template.layout.events({
     }
 });
 
+ConnectedUsers = new Mongo.Collection("connectedUsers");
+
 Meteor.startup(() => {
     moment.locale('de');
 

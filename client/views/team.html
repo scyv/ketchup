@@ -1,0 +1,18 @@
+<template name="team">
+    {{#if membersLoading}}
+        Laden...
+    {{else}}
+        {{#each members}}
+            <div class="row">
+                <div class="col-xs-12">
+                    {{profile.name}}
+                    {{#with runningPomodoro}}
+                        FOCUSED: {{formattedTime timeRunning}}
+                    {{/with}}
+                </div>
+            </div>
+        {{else}}
+
+        {{/each}}
+    {{/if}}
+</template>

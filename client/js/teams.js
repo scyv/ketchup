@@ -1,5 +1,7 @@
 import { Template } from "meteor/templating";
 import { teamsHandle } from "./main";
+import { connectedUsersHandle } from "./main";
+import { pomodoroHandle } from "./main";
 
 Template.teams.helpers({
     teamsLoading() {

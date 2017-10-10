@@ -41,6 +41,9 @@ Template.layout.helpers({
     },
     teamsSelected() {
         return Router.current().route.getName().startsWith("team") ? "selected" : "";
+    },
+    settingsSelected() {
+        return Router.current().route.getName() === "settings" ? "selected" : "";
     }
 });
 
@@ -56,6 +59,9 @@ Template.layout.events({
     },
     "click .btn-pomodoro"() {
         Router.go("/");
+    },
+    "click .btn-settings"() {
+        Router.go("settings");
     }
 });
 

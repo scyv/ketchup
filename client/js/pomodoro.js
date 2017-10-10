@@ -8,9 +8,11 @@ Template.pomodoro.helpers({
     runningPomodoro() {
         const runningPomodoro = Pomodoros.findOne({end: null, owner: Meteor.userId()});
         if (runningPomodoro) {
+            const now = new Date();
             return {
                 pomodoro: runningPomodoro,
-                timeRunning: new Date() - runningPomodoro.start
+                timeRunning: now - runningPomodoro.start,
+                timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes") - moment(now - runningPomodoro.start)
             }
         }
         return undefined;

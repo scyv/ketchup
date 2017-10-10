@@ -7,6 +7,7 @@ Meteor.methods({
         if (this.userId) {
             const pomodoro = Factory.createPomodoro(this.userId);
             pomodoro.start = new Date();
+            pomodoro.targetLength = Meteor.user().profile.settings.pomodoroLength;
             Pomodoros.insert(pomodoro);
         }
     },
@@ -46,6 +47,23 @@ Meteor.methods({
         if (team) {
             Teams.update(team._id, {$pullAll: {members: [this.userId]}});
         }
+    },
+    "saveSettings"(userName, email, pomodoroLength) {
+        check(userName, String);
+        check(email, String);
+        check(pomodoroLength, Number);
 
+        if (this.userId) {
+            Meteor.users.update(this.userId, {
+                $set: {
+                    profile: {
+                        name: userName,
+                        settings: {
+                            pomodoroLength: pomodoroLength
+                        }
+                    }
+                }
+            });
+        }
     }
 });

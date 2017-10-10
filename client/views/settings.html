@@ -1,0 +1,22 @@
+<template name="settings">
+    {{#with currentUser}}
+        <form>
+            <div class="form-group">
+                <label for="inputUserName">Benutzername</label>
+                <input type="text" class="form-control" id="inputUserName" placeholder="Ihr Benutzername" value="{{profile.name}}">
+            </div>
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="max.power@example.com" value="{{email}}">
+            </div>
+            <div class="form-group">
+                <label for="inputPomodoroLength">Länge eines Pomodoros (Minuten)</label>
+                <input type="number" class="form-control" id="inputPomodoroLength" placeholder="z.B. 25" value="{{profile.settings.pomodoroLength}}">
+            </div>
+            <button type="submit" class="btn btn-default btn-save">Speichern</button>
+            {{#if saveSuccess}}
+                <i class="glyphicon glyphicon-ok save-success"></i>
+            {{/if}}
+        </form>
+    {{/with}}
+</template>

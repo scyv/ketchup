@@ -6,6 +6,7 @@ export class Factory {
         return {
             start: undefined,
             end: undefined,
+            targetLength: undefined,
             comment: "",
             owner: ownerId
         }

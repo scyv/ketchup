@@ -1,0 +1,113 @@
+/* CSS declarations go here */
+
+body {
+    padding-top: 6rem;
+}
+
+.home, .tools i {
+    cursor: pointer;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-weight: normal;
+}
+
+.input-group-addon.glyphicon {
+    top: 0;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.header {
+    background: #b73229;
+    color: #ffffff;
+    font-weight: lighter;
+    padding: 1rem;
+    line-height: 2rem;
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+
+    .tools i {
+        color: #942a00;
+        font-weight: normal;
+        margin-left: 0.5rem;
+    }
+
+    .tools i.selected {
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+}
+
+
+.save-success {
+    color: #00AA00;
+    margin-left: 1rem;
+}
+
+.timer {
+    button {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}
+
+.timeLeft {
+    text-align: center;
+    font-size: 10rem;
+    line-height: 10rem;
+    display: block;
+    color: #b73229;
+}
+
+.timeRunning {
+    text-align: center;
+    font-size: 5rem;
+    line-height: 5rem;
+    display: block;
+    color: #a5a5a5;
+}
+
+.pie {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin: 10px;
+    transform: rotate(-90deg);
+    line-height: 200px;
+}
+
+svg {
+    background: #b73229;
+    border-radius: 50%;
+}
+
+circle {
+    fill: #b73229;
+    stroke: #655;
+    stroke-width: 32;
+    transition: stroke-dasharray 2s;
+}
+
+
+@media (min-width: 321px) {
+    .header {
+        font-size: 2.5rem;
+    }
+
+    .header .tools i {
+        margin-left: 1rem;
+    }
+
+}
+

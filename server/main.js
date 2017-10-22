@@ -4,6 +4,17 @@ Meteor.startup(() => {
     // code to run on server at startup
     Accounts.emailTemplates.siteName = "Ketchup";
     Accounts.emailTemplates.from = "Ketchup <ketchup@mailgun.scytec.de>";
+
+    // Run timer to stop overtimed pomodoros
+    Meteor.setInterval(function () {
+        const now = new Date();
+        Pomodoros.find({end: undefined}).forEach((po) => {
+            if (now - po.start > po.targetLength * 60 * 1000) {
+                Pomodoros.update(po._id, {$set: {end: new Date(), comment: ""}});
+                console.log("Stopping pomodoro with id: ", po._id);
+            }
+        })
+    }, 1000 * 60);
 });
 
 Meteor.publish("pomodoros", function () {

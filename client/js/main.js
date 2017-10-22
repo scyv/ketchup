@@ -1,8 +1,6 @@
 import { Template } from "meteor/templating";
 import { Accounts } from "meteor/accounts-base"
 
-import "./../views/main.html";
-
 export let pomodoroHandle;
 export let teamsHandle;
 export let connectedUsersHandle;
@@ -20,6 +18,13 @@ formattedTime = function (time) {
     return moment.duration(time).humanize();
 };
 
+formattedPomodoroTime = function (time) {
+    if (!time) {
+        return "";
+    }
+    return moment(time).format("mm:ss");
+};
+
 formattedDate = function (date) {
     if (!date) {
         return "-";
@@ -33,6 +38,10 @@ UI.registerHelper("formattedTime", function (time) {
 
 UI.registerHelper("formattedDate", function (dateTime) {
     return formattedDate(dateTime);
+});
+
+UI.registerHelper("formattedPomodoroTime", function (time) {
+    return formattedPomodoroTime(time);
 });
 
 Template.layout.helpers({
@@ -75,4 +84,9 @@ Meteor.startup(() => {
         teamsHandle = Meteor.subscribe("teams");
         connectedUsersHandle = Meteor.subscribe("connectedUsers");
     });
+
+    Session.set("reactiveTimer", 0);
+    Meteor.setInterval(function () {
+        Session.set("reactiveTimer", Session.get("reactiveTimer") + 1);
+    }, 1000);
 });

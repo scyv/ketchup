@@ -7,6 +7,7 @@ export class Factory {
             start: undefined,
             end: undefined,
             targetLength: undefined,
+            interrupted: false,
             comment: "",
             owner: ownerId
         }

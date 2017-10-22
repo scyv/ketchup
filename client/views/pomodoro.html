@@ -1,24 +1,38 @@
 <template name="pomodoro">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div class="pie"></div>
+        </div>
+    </div>
     {{#if pomodoroLoading}}
         Laden...
     {{else}}
-        <div class="row">
-            <div class="col-xs-12">
+        <div class="row timer">
+            <div class="col-xs-12 text-center">
                 {{#if runningPomodoro}}
                     {{#with runningPomodoro}}
-                        <button class="btn btn-interrupt btn-danger">Unterbrechen</button>
-                        <br>
-                        Läuft: {{formattedTime timeRunning}}<br>
-                        Übrig: {{formattedTime timeLeft}}<br>
+                        <span class="timeLeft">{{formattedPomodoroTime timeLeft}}</span>
+                        <span class="timeRunning">{{formattedPomodoroTime timeRunning}}</span>
+                        <button class="btn btn-lg btn-interrupt btn-danger">
+                            <i class="glyphicon glyphicon-stop"></i> Unterbrechen
+                        </button>
                     {{/with}}
                 {{else}}
-                    <button class="btn btn-start btn-success">Start</button>
+                    <span class="timeLeft">{{formattedPomodoroTime targetLength}}</span>
+                    <span class="timeRunning">00:00</span>
+                    <button class="btn btn-lg btn-start btn-success">
+                        <i class="glyphicon glyphicon-play"></i> Starten
+                    </button>
                 {{/if}}
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12">
-                Pomodoros insgesamt: {{pomodoroCount}}
+            <div class="col-xs-12 text-center">
+                <ul class="list-group">
+                    <li class="list-group-item">Pomodoros heute: {{pomodoroCountToday}}</li>
+                    <li class="list-group-item">Unterbrechungen heute: {{interruptionsToday}}</li>
+                    <li class="list-group-item">Pomodoros insgesamt: {{pomodoroCount}}</li>
+                </ul>
             </div>
         </div>
     {{/if}}

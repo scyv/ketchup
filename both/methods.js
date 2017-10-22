@@ -15,7 +15,9 @@ Meteor.methods({
         check(comment, String);
         const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: undefined});
         if (runningPomodoro) {
-            Pomodoros.update(runningPomodoro._id, {$set: {end: new Date(), comment: comment}});
+            const now = new Date();
+            const interrupted = (now - runningPomodoro.start)  < (runningPomodoro.targetLength * 60 * 1000);
+            Pomodoros.update(runningPomodoro._id, {$set: {end: now, interrupted: interrupted, comment: comment}});
         }
     },
     "createTeam"(name) {

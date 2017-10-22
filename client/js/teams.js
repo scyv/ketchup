@@ -19,19 +19,28 @@ Template.teams.helpers({
         return memberIds.map(id =>Meteor.users.findOne(id));
     },
     runningPomodoro() {
+        Session.get("reactiveTimer");
         const runningPomodoro = Pomodoros.findOne({end: null, owner: this._id});
         if (runningPomodoro) {
-            return {
+            return [{
                 pomodoro: runningPomodoro,
-                timeRunning: new Date() - runningPomodoro.start
-            }
+                timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes") - moment(new Date() - runningPomodoro.start)
+            }];
         }
-        return undefined;
+        return [];
+    },
+    isFocused() {
+        return Pomodoros
+    },
+    isTeamOwner() {
+        return this.owner === Meteor.userId();
     }
 });
 
 Template.teams.events({
     "click .btn-edit-team"() {
+        Session.set("selectedTeam", this._id);
+        Router.go("team");
     },
     "click .btn-create-team"() {
         const name = prompt("Name");
@@ -46,6 +55,8 @@ Template.teams.events({
         }
     },
     "click .btn-leave-team"() {
-        Meteor.call("leaveTeam", this.key);
+        if (confirm("Möchten Sie das Team " + this.name + " wirklich verlassen?")){
+            Meteor.call("leaveTeam", this.key);
+        }
     }
 });

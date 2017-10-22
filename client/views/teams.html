@@ -12,29 +12,36 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h1>{{name}}</h1>
-                    <button class="btn btn-default btn-edit-team">Bearbeiten</button>
-                    <button class="btn btn-default btn-leave-team">Verlassen</button>
-                    <p>Schlüssel zum beitreten: {{key}}</p>
+                    <button class="btn btn-link btn-leave-team pull-right">
+                        <i class="glyphicon glyphicon-remove"></i> Team Verlassen
+                    </button>
+                    {{#if isTeamOwner}}
+                        <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</button>
+                    {{/if}}
                     {{#if membersLoading}}
                         Laden...
                     {{else}}
                         <h4>Mitglieder</h4>
-                        {{#each members}}
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    {{profile.name}}
-                                    {{#with runningPomodoro}}
-                                        FOCUSED: {{formattedTime timeRunning}}
-                                    {{/with}}
-                                </div>
-                            </div>
-                        {{else}}
-
-                        {{/each}}
+                        <ul class="list-group">
+                            {{#each members}}
+                                {{#each runningPomodoro}}
+                                    <li class="list-group-item focused">
+                                        {{../profile.name}}
+                                        <span class="pull-right">Pause in: {{formattedTime timeLeft}}</span>
+                                    </li>
+                                {{else}}
+                                    <li class="list-group-item">
+                                        {{profile.name}}
+                                    </li>
+                                {{/each}}
+                            {{else}}
+                                <li>Nix los</li>
+                            {{/each}}
+                        </ul>
                     {{/if}}
                 </div>
             </div>
-            <hr />
+            <hr/>
         {{else}}
 
         {{/each}}

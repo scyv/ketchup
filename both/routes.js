@@ -24,6 +24,14 @@ Router.route("/teams", function () {
     }
 }, {name: "teams"});
 
+Router.route("/team", function () {
+    if (Meteor.userId()) {
+        this.render("team");
+    } else {
+        this.render("login");
+    }
+}, {name: "team"});
+
 Router.route("/settings", function () {
     if (Meteor.userId()) {
         this.render("settings");

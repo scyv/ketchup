@@ -14,11 +14,29 @@ function renderPomodoroPie() {
         circle.setAttribute("cx", 16);
         circle.setAttribute("cy", 16);
         circle.setAttribute("stroke-dasharray", "0 100");
-
+        circle.setAttribute("class", "progress");
         svg.setAttribute("viewBox", "0 0 32 32");
+        svg.setAttribute("shape-rendering", "geometricPrecision");
         title.textContent = "";
+
+        var innerCircle = document.createElementNS(NS, "circle");
+        innerCircle.setAttribute("r", 7);
+        innerCircle.setAttribute("cx", 16);
+        innerCircle.setAttribute("cy", 16);
+        innerCircle.setAttribute("fill", "#FFFFFF");
+
+        var outerCircle = document.createElementNS(NS, "circle");
+        outerCircle.setAttribute("r", 20);
+        outerCircle.setAttribute("cx", 16);
+        outerCircle.setAttribute("cy", 16);
+        outerCircle.setAttribute("fill", "none");
+        outerCircle.setAttribute("stroke", "#FFFFFF");
+        outerCircle.setAttribute("stroke-width", "9px");
+
         svg.appendChild(title);
         svg.appendChild(circle);
+        svg.appendChild(innerCircle);
+        svg.appendChild(outerCircle);
 
         pomodoroPie.innerHTML = "";
         pomodoroPie.appendChild(svg);
@@ -30,14 +48,18 @@ function pieIsRendered() {
 }
 
 function updatePomodoroPie(percent, title) {
-    const circleElem = $(".pie circle");
+    const circleElem = $(".pie circle.progress");
     const titleElem = $(".pie title");
     circleElem.attr("stroke-dasharray", parseInt(percent, 10) + " 100");
     titleElem.text(title);
 }
 
 function updateTitle(values) {
-    document.title = "Ketchup " + formattedPomodoroTime(values.timeLeft);
+    if (values.timeLeft <=0) {
+        document.title = "Ketchup";
+    } else {
+        document.title = "Ketchup " + formattedPomodoroTime(values.timeLeft);
+    }
 }
 
 function checkOvertime(values) {
@@ -69,7 +91,7 @@ Template.pomodoro.helpers({
                 timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes") - moment(now - runningPomodoro.start)
             };
             const percent = parseInt(100 * ((now - runningPomodoro.start) / 1000) / (runningPomodoro.targetLength * 60));
-            updatePomodoroPie(percent, values.timeRunning);
+            updatePomodoroPie(percent, formattedPomodoroTime(values.timeRunning));
             updateTitle(values);
             checkOvertime(values);
             return values;
@@ -83,7 +105,7 @@ Template.pomodoro.helpers({
         return Pomodoros.find({owner: Meteor.userId(), start: {$gte: moment().startOf("day").toDate()}}).count();
     },
     interruptionsToday() {
-        return Pomodoros.find({owner: Meteor.userId(), interrupted: true}).count();
+        return Pomodoros.find({owner: Meteor.userId(), start: {$gte: moment().startOf("day").toDate()}, interrupted: true}).count();
     },
     pomodoroCount() {
         return Pomodoros.find({owner: Meteor.userId()}).count();

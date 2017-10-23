@@ -1,6 +1,6 @@
 <template name="teams">
     {{#if teamsLoading}}
-        Laden...
+        <p class="text-center">Laden...</p>
     {{else}}
         <div class="row">
             <div class="col-xs-12">
@@ -9,6 +9,7 @@
             </div>
         </div>
         {{#each teams}}
+            <hr/>
             <div class="row">
                 <div class="col-xs-12">
                     <h1>{{name}}</h1>
@@ -19,7 +20,7 @@
                         <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</button>
                     {{/if}}
                     {{#if membersLoading}}
-                        Laden...
+                        <p class="text-center">Laden...</p>
                     {{else}}
                         <h4>Mitglieder</h4>
                         <ul class="list-group">
@@ -41,7 +42,6 @@
                     {{/if}}
                 </div>
             </div>
-            <hr/>
         {{else}}
 
         {{/each}}

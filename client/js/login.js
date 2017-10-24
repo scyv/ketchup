@@ -21,7 +21,10 @@ Template.login.events({
             email: email,
             password: password,
             profile: {
-                name: name
+                name: name,
+                settings: {
+                    pomodoroLength: 25
+                }
             }
         };
 

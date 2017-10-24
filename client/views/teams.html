@@ -27,12 +27,21 @@
                             {{#each members}}
                                 {{#each runningPomodoro}}
                                     <li class="list-group-item focused">
-                                        {{../profile.name}}
-                                        <span class="pull-right">Pause in: {{formattedTime timeLeft}}</span>
+                                        {{#if notSelf}}
+                                            <button class="btn btn-sm btn-danger pull-right btn-subscribe {{isActive}}"
+                                                    title="Anmelden: Teammitglied wird zu Beginn der Pause benachrichtigt.">
+                                                <i class="glyphicon glyphicon-bullhorn"></i>
+                                            </button>
+                                        {{/if}}
+                                        <h4 class="list-group-item-heading">{{../profile.name}}</h4>
+                                        <p class="list-group-item-text">
+                                            <span class="">Pause in: {{formattedTime timeLeft}}</span>
+                                        </p>
                                     </li>
                                 {{else}}
                                     <li class="list-group-item">
-                                        {{profile.name}}
+                                        <h4 class="list-group-item-heading">{{profile.name}}</h4>
+                                        <p class="list-group-item-text">&nbsp;</p>
                                     </li>
                                 {{/each}}
                             {{else}}

@@ -29,11 +29,14 @@ Template.teams.helpers({
         }
         return [];
     },
-    isFocused() {
-        return Pomodoros
-    },
     isTeamOwner() {
         return this.owner === Meteor.userId();
+    },
+    isActive() {
+        return Subscriptions.findOne({from: Meteor.userId(), to: this.pomodoro.owner}) ? "active" : "";
+    },
+    notSelf() {
+        return this.pomodoro.owner !== Meteor.userId();
     }
 });
 
@@ -57,6 +60,15 @@ Template.teams.events({
     "click .btn-leave-team"() {
         if (confirm("Möchten Sie das Team " + this.name + " wirklich verlassen?")) {
             Meteor.call("leaveTeam", this.key);
+        }
+    },
+    "click .btn-subscribe"(evt, templ) {
+        const btn = $(templ.find(".btn-subscribe"));
+        const isActive = btn.hasClass("active");
+        if (isActive) {
+            Meteor.call("removeOutgoingSubscription", this.pomodoro.owner);
+        } else {
+            Meteor.call("createSubscription", this.pomodoro.owner);
         }
     }
 });

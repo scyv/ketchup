@@ -16,7 +16,7 @@ Meteor.methods({
         const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: undefined});
         if (runningPomodoro) {
             const now = new Date();
-            const interrupted = (now - runningPomodoro.start)  < (runningPomodoro.targetLength * 60 * 1000);
+            const interrupted = (now - runningPomodoro.start) < (runningPomodoro.targetLength * 60 * 1000);
             Pomodoros.update(runningPomodoro._id, {$set: {end: now, interrupted: interrupted, comment: comment}});
         }
     },
@@ -67,6 +67,24 @@ Meteor.methods({
                     }
                 }
             });
+        }
+    },
+    "createSubscription"(toUserId) {
+        check(toUserId, String);
+        if (this.userId) {
+            Subscriptions.insert({from: this.userId, to: toUserId});
+        }
+    },
+    "removeOutgoingSubscription"(toUserId) {
+        check(toUserId, String);
+        if (this.userId) {
+            Subscriptions.remove({from: this.userId, to: toUserId});
+        }
+    },
+    "removeIncomingSubscription"(fromUserId) {
+        check(fromUserId, String);
+        if (this.userId) {
+            Subscriptions.remove({from: fromUserId, to: this.userId});
         }
     }
 });

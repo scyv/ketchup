@@ -4,6 +4,7 @@ import { Accounts } from "meteor/accounts-base"
 export let pomodoroHandle;
 export let teamsHandle;
 export let connectedUsersHandle;
+export let subscriptionsHandle;
 
 Accounts.onResetPasswordLink((token) => {
     window.setTimeout(()=> {
@@ -82,6 +83,7 @@ Meteor.startup(() => {
     Tracker.autorun(() => {
         pomodoroHandle = Meteor.subscribe("pomodoros");
         teamsHandle = Meteor.subscribe("teams");
+        subscriptionsHandle = Meteor.subscribe(("subscriptions"));
     });
     connectedUsersHandle = Meteor.subscribe("connectedUsers");
 

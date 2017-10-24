@@ -55,7 +55,7 @@ function updatePomodoroPie(percent, title) {
 }
 
 function updateTitle(values) {
-    if (values.timeLeft <=0) {
+    if (values.timeLeft <= 0) {
         document.title = "Ketchup";
     } else {
         document.title = "Ketchup " + formattedPomodoroTime(values.timeLeft);
@@ -66,7 +66,10 @@ function checkOvertime(values) {
     const runningPomodoro = values.pomodoro;
     if (values.timeRunning > runningPomodoro.targetLength * 60 * 1000) {
         Meteor.call("stopPomodoro", "", () => {
-            Notifications.notify("Pomodoro gestoppt!");
+            Notifications.notify("Pomodoro beendet! Gönnen Sie sich eine Pause!");
+            const circleElem = $(".pie circle.progress");
+            circleElem.attr("class", "progress finished");
+            circleElem.attr("stroke-dasharray", "0 100");
         });
     }
 }
@@ -99,16 +102,30 @@ Template.pomodoro.helpers({
         return undefined;
     },
     targetLength() {
-      return Meteor.user().profile.settings.pomodoroLength * 60 * 1000;
+        return Meteor.user().profile.settings.pomodoroLength * 60 * 1000;
     },
     pomodoroCountToday() {
         return Pomodoros.find({owner: Meteor.userId(), start: {$gte: moment().startOf("day").toDate()}}).count();
     },
     interruptionsToday() {
-        return Pomodoros.find({owner: Meteor.userId(), start: {$gte: moment().startOf("day").toDate()}, interrupted: true}).count();
+        return Pomodoros.find({
+            owner: Meteor.userId(),
+            start: {$gte: moment().startOf("day").toDate()},
+            interrupted: true
+        }).count();
     },
     pomodoroCount() {
         return Pomodoros.find({owner: Meteor.userId()}).count();
+    },
+    subscriptions() {
+        return Subscriptions.find({to: Meteor.userId()});
+    },
+    from() {
+        const user = Meteor.users.findOne(this.from);
+        if (user) {
+            return user.profile.name;
+        }
+        return this.from;
     }
 });
 
@@ -116,12 +133,16 @@ Template.pomodoro.events({
     "click .btn-start"() {
         Meteor.call("startPomodoro", ()=> {
             Notifications.notify("Pomodoro gestartet!");
+            $(".pie circle.progress").attr("class", "progress");
         });
     },
     "click .btn-interrupt"() {
         Meteor.call("stopPomodoro", "", () => {
             Notifications.notify("Pomodoro angehalten!");
         });
+    },
+    "click .btn-remove-subscription"() {
+        Meteor.call("removeIncomingSubscription", this.from);
     }
 });
 

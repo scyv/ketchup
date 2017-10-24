@@ -44,7 +44,7 @@ Meteor.publish("teams", function () {
 
 Meteor.publish("connectedUsers", function () {
     if (this.userId) {
-        this.autorun(()=>{
+        this.autorun(()=> {
             let users = [];
             const handle = Teams.find({members: {$in: [this.userId]}});
             handle.forEach((team)=> {
@@ -55,6 +55,10 @@ Meteor.publish("connectedUsers", function () {
     } else {
         return [];
     }
+});
+
+Meteor.publish("subscriptions", function () {
+    return Subscriptions.find({$or: [{to: this.userId}, {from: this.userId}]});
 });
 
 

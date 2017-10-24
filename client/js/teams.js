@@ -55,7 +55,7 @@ Template.teams.events({
         }
     },
     "click .btn-leave-team"() {
-        if (confirm("Möchten Sie das Team " + this.name + " wirklich verlassen?")){
+        if (confirm("Möchten Sie das Team " + this.name + " wirklich verlassen?")) {
             Meteor.call("leaveTeam", this.key);
         }
     }

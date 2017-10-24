@@ -1,5 +1,6 @@
 {
-  "name": "ketchp",
+  "name": "ketchup",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "start": "meteor run"

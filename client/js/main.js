@@ -82,8 +82,8 @@ Meteor.startup(() => {
     Tracker.autorun(() => {
         pomodoroHandle = Meteor.subscribe("pomodoros");
         teamsHandle = Meteor.subscribe("teams");
-        connectedUsersHandle = Meteor.subscribe("connectedUsers");
     });
+    connectedUsersHandle = Meteor.subscribe("connectedUsers");
 
     Session.set("reactiveTimer", 0);
     Meteor.setInterval(function () {

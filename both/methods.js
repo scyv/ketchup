@@ -41,6 +41,7 @@ Meteor.methods({
         const team = Teams.findOne({key: key});
         if (team) {
             Teams.update(team._id, {$addToSet: {members: this.userId}});
+
         }
     },
     "leaveTeam"(key) {

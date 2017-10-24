@@ -29,7 +29,7 @@ Meteor.publish("pomodoros", function () {
 
         return Pomodoros.find({owner: {$in: pomodoroOwners}}); //, {fields: {secretInfo: 0}});
     } else {
-        this.ready();
+        return [];
     }
 });
 
@@ -38,19 +38,22 @@ Meteor.publish("teams", function () {
     if (this.userId) {
         return Teams.find({members: {$in: [this.userId]}}); //, {fields: {secretInfo: 0}});
     } else {
-        this.ready();
+        return [];
     }
 });
 
 Meteor.publish("connectedUsers", function () {
     if (this.userId) {
-        let users = [];
-        Teams.find({members: {$in: [this.userId]}}).forEach((team)=> {
-            users = _.union(users, team.members);
+        this.autorun(()=>{
+            let users = [];
+            const handle = Teams.find({members: {$in: [this.userId]}});
+            handle.forEach((team)=> {
+                users = _.union(users, team.members);
+            });
+            return Meteor.users.find({_id: {$in: users}}, {fields: {'profile': 1}});
         });
-        return Meteor.users.find({_id: {$in: users}}, {fields: {'profile': 1}});
     } else {
-        this.ready();
+        return [];
     }
 });
 

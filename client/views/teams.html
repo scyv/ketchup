@@ -2,14 +2,7 @@
     {{#if teamsLoading}}
         <p class="text-center">Laden...</p>
     {{else}}
-        <div class="row">
-            <div class="col-xs-12">
-                <button class="btn btn-success btn-create-team">Team erstellen</button>
-                <button class="btn btn-primary btn-join-team">Team beitreten</button>
-            </div>
-        </div>
         {{#each teams}}
-            <hr/>
             <div class="row">
                 <div class="col-xs-12">
                     <h1>{{name}}</h1>
@@ -54,5 +47,12 @@
         {{else}}
 
         {{/each}}
+        <hr/>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <button class="btn btn-success btn-create-team"><i class="glyphicon glyphicon-plus"></i> Team erstellen</button>
+                <button class="btn btn-primary btn-join-team"><i class="glyphicon glyphicon-user"></i> Team beitreten</button>
+            </div>
+        </div>
     {{/if}}
 </template>

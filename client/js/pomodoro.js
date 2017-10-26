@@ -1,6 +1,7 @@
 import { Template } from "meteor/templating";
 import { pomodoroHandle } from "./main";
 import { Notifications } from "./notifications";
+import { NotificationCenter } from "./notificationCenter";
 
 function renderPomodoroPie() {
     const pomodoroPie = $(".pie")[0];
@@ -66,7 +67,7 @@ function checkOvertime(values) {
     const runningPomodoro = values.pomodoro;
     if (values.timeRunning > runningPomodoro.targetLength * 60 * 1000) {
         Meteor.call("stopPomodoro", "", () => {
-            Notifications.notify("Pomodoro beendet! Gönnen Sie sich eine Pause!");
+            NotificationCenter.notifyFinished(runningPomodoro);
             const circleElem = $(".pie circle.progress");
             circleElem.attr("class", "progress finished");
             circleElem.attr("stroke-dasharray", "0 100");
@@ -132,14 +133,12 @@ Template.pomodoro.helpers({
 Template.pomodoro.events({
     "click .btn-start"() {
         Meteor.call("startPomodoro", ()=> {
-            Notifications.notify("Pomodoro gestartet!");
-            $(".pie circle.progress").attr("class", "progress");
+            NotificationCenter.notifyStarted();
+            $(".pie circle.progress").attr("class", "progress running");
         });
     },
     "click .btn-interrupt"() {
-        Meteor.call("stopPomodoro", "", () => {
-            Notifications.notify("Pomodoro angehalten!");
-        });
+        Meteor.call("stopPomodoro", "");
     },
     "click .btn-remove-subscription"() {
         Meteor.call("removeIncomingSubscription", this.from);

@@ -18,9 +18,15 @@ export class Notifications {
         }
     }
 
-    static notify(text) {
+    static notify(title, message) {
+        const options = {
+            icon: "/favicon.png"
+        };
+        if (message) {
+            options.body = message;
+        }
         const openNotification = () => {
-            new Notification(text);
+            new Notification(title, options);
         };
         if (!Notifications._checkNotificationsAvailable()) {
             return;

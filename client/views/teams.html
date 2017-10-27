@@ -19,7 +19,7 @@
                         <ul class="list-group">
                             {{#each members}}
                                 {{#each runningPomodoro}}
-                                    <li class="list-group-item focused">
+                                    <li class="list-group-item focused member-{{../_id}}">
                                         {{#if notSelf}}
                                             <button class="btn btn-sm btn-danger pull-right btn-subscribe {{isActive}}"
                                                     title="Anmelden: Teammitglied wird zu Beginn der Pause benachrichtigt.">
@@ -27,14 +27,18 @@
                                             </button>
                                         {{/if}}
                                         <h4 class="list-group-item-heading">{{../profile.name}}</h4>
-                                        <p class="list-group-item-text">
+                                        <div class="list-group-item-text">
                                             <span class="">Pause in {{formattedTime timeLeft}}</span>
-                                        </p>
+                                            {{> subscriptionList ../_id}}
+                                        </div>
                                     </li>
                                 {{else}}
                                     <li class="list-group-item">
                                         <h4 class="list-group-item-heading">{{profile.name}}</h4>
-                                        <p class="list-group-item-text">&nbsp;</p>
+                                        <div class="list-group-item-text">
+                                            <span>&nbsp;</span>
+                                            {{> subscriptionList _id}}
+                                        </div>
                                     </li>
                                 {{/each}}
                             {{else}}
@@ -55,4 +59,12 @@
             </div>
         </div>
     {{/if}}
+</template>
+
+<template name="subscriptionList">
+    <p>
+        {{#each subscriptions}}
+            <span class="label label-danger"><i class="glyphicon glyphicon-bullhorn"></i> {{.}}</span>
+        {{/each}}
+    </p>
 </template>

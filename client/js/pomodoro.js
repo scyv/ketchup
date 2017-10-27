@@ -9,7 +9,7 @@ let progressIndicator = undefined;
 Template.pomodoro.helpers({
     pomodoroLoading() {
         const ready = pomodoroHandle.ready();
-        if (ready) {
+        if (ready && progressIndicator) {
             progressIndicator.updateProgress(0, getFormattedTargetLength());
         }
         return !ready;
@@ -29,7 +29,9 @@ Template.pomodoro.helpers({
                 timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes") - moment(now - runningPomodoro.start)
             };
             const percent = parseInt(100 * ((now - runningPomodoro.start) / 1000) / (runningPomodoro.targetLength * 60));
-            progressIndicator.updateProgress(percent, formattedPomodoroTime(values.timeLeft));
+            if (progressIndicator) {
+                progressIndicator.updateProgress(percent, formattedPomodoroTime(values.timeLeft));
+            }
             updateTitle(values);
             checkOvertime(values);
             return values;
@@ -85,7 +87,7 @@ function renderPomodoroPie() {
     if (pomodoroPie) {
         progressIndicator = new ProgressCircle(pomodoroPie);
         progressIndicator.create(pomodoroPie);
-        if (Meteor.user().profile) {
+        if (Meteor.user() && Meteor.user().profile) {
             progressIndicator.updateProgress(0, getFormattedTargetLength());
         }
     }

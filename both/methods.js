@@ -9,6 +9,8 @@ Meteor.methods({
             pomodoro.start = new Date();
             pomodoro.targetLength = Meteor.user().profile.settings.pomodoroLength;
             Pomodoros.insert(pomodoro);
+        } else {
+            throw Meteor.error("Unauthorized", 403);
         }
     },
     "stopPomodoro"(comment) {
@@ -41,7 +43,6 @@ Meteor.methods({
         const team = Teams.findOne({key: key});
         if (team) {
             Teams.update(team._id, {$addToSet: {members: this.userId}});
-
         }
     },
     "leaveTeam"(key) {
@@ -67,24 +68,34 @@ Meteor.methods({
                     }
                 }
             });
+        } else {
+            throw Meteor.error("Unauthorized", 403);
         }
     },
     "createSubscription"(toUserId) {
         check(toUserId, String);
         if (this.userId) {
-            Subscriptions.insert({from: this.userId, to: toUserId});
+            if (!Subscriptions.findOne({from: this.userId, to: toUserId})) {
+                Subscriptions.insert({from: this.userId, to: toUserId});
+            }
+        } else {
+            throw Meteor.error("Unauthorized", 403);
         }
     },
     "removeOutgoingSubscription"(toUserId) {
         check(toUserId, String);
         if (this.userId) {
             Subscriptions.remove({from: this.userId, to: toUserId});
+        } else {
+            throw Meteor.error("Unauthorized", 403);
         }
     },
     "removeIncomingSubscription"(fromUserId) {
         check(fromUserId, String);
         if (this.userId) {
             Subscriptions.remove({from: fromUserId, to: this.userId});
+        } else {
+            throw Meteor.error("Unauthorized", 403);
         }
     }
 });

@@ -11,7 +11,6 @@ Meteor.startup(() => {
         Pomodoros.find({end: undefined}).forEach((po) => {
             if (now - po.start > po.targetLength * 60 * 1000) {
                 Pomodoros.update(po._id, {$set: {end: new Date(), comment: ""}});
-                console.log("Stopping pomodoro with id: ", po._id);
             }
         })
     }, 1000 * 60);
@@ -19,15 +18,16 @@ Meteor.startup(() => {
 
 Meteor.publish("pomodoros", function () {
     if (this.userId) {
+        this.autorun(()=> {
+            // find all pomodoros of all members of my teams (because i want to see them in the teams view)
+            const teams = Teams.find({members: {$in: [this.userId]}});
+            let pomodoroOwners = [this.userId];
+            teams.forEach(function (team) {
+                pomodoroOwners = _.union(pomodoroOwners, team.members);
+            });
 
-        // find all pomodoros of all members of my teams (because i want to see them in the teams view)
-        const teams = Teams.find({members: {$in: [this.userId]}});
-        let pomodoroOwners = [this.userId];
-        teams.forEach(function (team) {
-            pomodoroOwners = _.union(pomodoroOwners, team.members);
+            return Pomodoros.find({owner: {$in: pomodoroOwners}}); //, {fields: {secretInfo: 0}});
         });
-
-        return Pomodoros.find({owner: {$in: pomodoroOwners}}); //, {fields: {secretInfo: 0}});
     } else {
         return [];
     }
@@ -58,7 +58,19 @@ Meteor.publish("connectedUsers", function () {
 });
 
 Meteor.publish("subscriptions", function () {
-    return Subscriptions.find({$or: [{to: this.userId}, {from: this.userId}]});
+    if (this.userId) {
+        this.autorun(()=> {
+            let users = [];
+            const handle = Teams.find({members: {$in: [this.userId]}});
+            handle.forEach((team)=> {
+                users = _.union(users, team.members);
+            });
+
+            return Subscriptions.find({$or: [{to: {$in: users}}, {from: {$in: users}}]});
+        });
+    } else {
+        return [];
+    }
 });
 
 

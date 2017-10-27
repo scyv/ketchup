@@ -28,7 +28,9 @@ Template.teams.helpers({
         if (runningPomodoro) {
             return [{
                 pomodoro: runningPomodoro,
-                timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes") - moment(new Date() - runningPomodoro.start)
+                timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes")
+                - moment(new Date() - runningPomodoro.start),
+                subscriptions: findSubscribers(this._id)
             }];
         }
         return [];
@@ -44,35 +46,53 @@ Template.teams.helpers({
     }
 });
 
+Template.subscriptionList.helpers({
+    subscriptions() {
+        return findSubscribers(this.toString());
+    }
+});
+
 Template.teams.events({
     "click .btn-edit-team"() {
         Session.set("selectedTeam", this._id);
         Router.go("team");
+        return false;
     },
     "click .btn-create-team"() {
         const name = prompt("Name");
         if (name) {
             Meteor.call("createTeam", name);
         }
+        return false;
     },
     "click .btn-join-team"() {
         const key = prompt("Key");
         if (key) {
             Meteor.call("joinTeam", key);
         }
+        return false;
     },
     "click .btn-leave-team"() {
         if (confirm("Möchten Sie das Team " + this.name + " wirklich verlassen?")) {
             Meteor.call("leaveTeam", this.key);
         }
+        return false;
     },
     "click .btn-subscribe"(evt, templ) {
-        const btn = $(templ.find(".btn-subscribe"));
+        const owner = this.pomodoro.owner;
+        const btn = $(".member-" + owner + " .btn-subscribe");
         const isActive = btn.hasClass("active");
         if (isActive) {
-            Meteor.call("removeOutgoingSubscription", this.pomodoro.owner);
+            Meteor.call("removeOutgoingSubscription", owner);
         } else {
-            Meteor.call("createSubscription", this.pomodoro.owner);
+            Meteor.call("createSubscription", owner);
         }
+        return false;
     }
 });
+
+function findSubscribers(userId) {
+    return Subscriptions.find({to: userId}).map((sub) => {
+        return Meteor.users.findOne(sub.from).profile.name;
+    });
+}

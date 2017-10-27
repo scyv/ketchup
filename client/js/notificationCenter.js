@@ -10,14 +10,14 @@ export class NotificationCenter {
         let message = "";
         if (subscriptionCount > 0) {
             if (subscriptionCount === 1) {
-                message += "\nOffene Anfrage von ";
+                message += "Offene Anfrage von ";
             } else {
-                message += "\nOffene Anfragen von ";
+                message += "Offene Anfragen von ";
             }
             const userList = subscriptionCursor.fetch().map((sub) =>{
                 return Meteor.users.findOne(sub.from).profile.name;
             });
-            message += "\n" + userList.join(", ");
+            message += userList.join(", ");
         }
         Notifications.notify(title, message);
 

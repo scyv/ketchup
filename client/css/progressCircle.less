@@ -1,0 +1,31 @@
+.pie {
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+  margin: 10px;
+  transform: rotate(-90deg);
+
+  svg {
+    background: #b73229;
+    border-radius: 0;
+  }
+
+  circle.progress {
+    fill: #b73229;
+    stroke: #e9e9e9;
+    stroke-width: 32;
+    transition: stroke-dasharray 0.5s;
+
+    &.finished {
+      fill: #32b729;
+    }
+  }
+
+  text {
+    transform: translateX(12px) translateY(16px) rotate(90deg);
+    font-size: 10px;
+    text-anchor: middle;
+    fill: #b73229;
+  }
+
+}

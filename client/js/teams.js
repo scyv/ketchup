@@ -16,7 +16,11 @@ Template.teams.helpers({
     },
     members() {
         const memberIds = Teams.findOne({key: this.key}).members;
-        return memberIds.map(id =>Meteor.users.findOne(id));
+        return memberIds.map(id =>Meteor.users.findOne(id)).sort((a, b)=> {
+            const aName = a.profile.name.toLowerCase();
+            const bName = b.profile.name.toLowerCase();
+            return aName < bName ? -1 : aName === bName ? 0 : 1;
+        });
     },
     runningPomodoro() {
         Session.get("reactiveTimer");

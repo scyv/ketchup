@@ -15,15 +15,11 @@
             <div class="col-xs-12 text-center">
                 {{#if runningPomodoro}}
                     {{#with runningPomodoro}}
-                        <span class="timeLeft">{{formattedPomodoroTime timeLeft}}</span>
-                        <span class="timeRunning">{{formattedPomodoroTime timeRunning}}</span>
                         <button class="btn btn-lg btn-interrupt btn-danger">
                             <i class="glyphicon glyphicon-stop"></i> Unterbrechen
                         </button>
                     {{/with}}
                 {{else}}
-                    <span class="timeLeft">{{formattedPomodoroTime targetLength}}</span>
-                    <span class="timeRunning">00:00</span>
                     <button class="btn btn-lg btn-start btn-success">
                         <i class="glyphicon glyphicon-play"></i> Starten
                     </button>

@@ -69,10 +69,12 @@ body {
 
 .timeLeft {
     text-align: center;
-    font-size: 10rem;
-    line-height: 10rem;
+    font-size: 90px;
+    line-height: 1;
     display: block;
     color: #b73229;
+    position:relative;
+    top: -190px;
 }
 
 .timeRunning {
@@ -81,32 +83,6 @@ body {
     line-height: 5rem;
     display: block;
     color: #a5a5a5;
-}
-
-.pie {
-    width: 200px;
-    height: 200px;
-    display: inline-block;
-    margin: 10px;
-    transform: rotate(-90deg);
-    line-height: 200px;
-
-    svg {
-        background: #b73229;
-        border-radius: 0%;
-    }
-
-    circle.progress {
-        fill: #b73229;
-        stroke: #e9e9e9;
-        stroke-width: 32;
-        transition: stroke-dasharray 0.5s;
-
-        &.finished {
-            fill: #32b729;
-        }
-    }
-
 }
 
 .btn-subscribe.active,.btn-subscribe:hover.active, .btn-subscribe:focus.active {

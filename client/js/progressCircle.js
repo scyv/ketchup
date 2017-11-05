@@ -19,7 +19,7 @@ export class ProgressCircle {
         circle.setAttribute("cy", this.center);
         circle.setAttribute("stroke-dasharray", "0 100");
         circle.setAttribute("class", "progress");
-        svg.setAttribute("viewBox", "0 0 32 32");
+        svg.setAttribute("viewBox", "-1 -1 33 33");
         svg.setAttribute("shape-rendering", "geometricPrecision");
         title.textContent = "";
 

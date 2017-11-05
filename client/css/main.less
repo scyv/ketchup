@@ -1,117 +1,127 @@
 /* CSS declarations go here */
 
 body {
-    padding-top: 6rem;
-    cursor: default;
+  padding-top: 6rem;
+  cursor: default;
 }
 
 .home, .tools i, .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .row {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .badge {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .input-group-addon.glyphicon {
-    top: 0;
+  top: 0;
 }
 
 .list-group {
-    margin-bottom: 0;
+  margin-bottom: 0;
 
-    .focused {
-        background: #b73229;
-        color: #FFFFFF;
-    }
+  .focused {
+    background: #b73229;
+    color: #FFFFFF;
+  }
 }
 
 .header {
-    background: #b73229;
-    color: #ffffff;
+  background: #b73229;
+  color: #ffffff;
+  font-weight: lighter;
+  padding: 1rem;
+  line-height: 2rem;
+  font-size: 2rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+
+  .tools i {
+    color: #942a00;
+    font-weight: normal;
+    margin-left: 0.5rem;
+  }
+
+  .tools i.selected {
     font-weight: lighter;
-    padding: 1rem;
-    line-height: 2rem;
-    font-size: 2rem;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-
-    .tools i {
-        color: #942a00;
-        font-weight: normal;
-        margin-left: 0.5rem;
-    }
-
-    .tools i.selected {
-        font-weight: lighter;
-        color: #ffffff;
-    }
+    color: #ffffff;
+  }
 
 }
 
-
 .save-success {
-    color: #00AA00;
+  color: #00AA00;
 }
 
 .timer {
-    button {
-        margin-top: 1rem;
-        width: 100%;
-    }
+  button {
+    margin-top: 1rem;
+    width: 100%;
+  }
 }
 
 .timeLeft {
-    text-align: center;
-    font-size: 90px;
-    line-height: 1;
-    display: block;
-    color: #b73229;
-    position:relative;
-    top: -190px;
+  text-align: center;
+  font-size: 90px;
+  line-height: 1;
+  display: block;
+  color: #b73229;
+  position: relative;
+  top: -190px;
 }
 
 .timeRunning {
-    text-align: center;
-    font-size: 5rem;
-    line-height: 5rem;
-    display: block;
-    color: #a5a5a5;
+  text-align: center;
+  font-size: 5rem;
+  line-height: 5rem;
+  display: block;
+  color: #a5a5a5;
 }
 
-.btn-subscribe.active,.btn-subscribe:hover.active, .btn-subscribe:focus.active {
-    color: #000;
-    background: #fffc00;
+.btn-subscribe.active, .btn-subscribe:hover.active, .btn-subscribe:focus.active {
+  color: #000;
+  background: #fffc00;
 }
 
 @media (min-width: 321px) {
-    .header {
-        font-size: 2.5rem;
-    }
+  .header {
+    font-size: 2.5rem;
+  }
 
-    .header .tools i {
-        margin-left: 1rem;
-    }
+  .header .tools i {
+    margin-left: 1rem;
+  }
 }
-
 
 @media (min-width: 500px) {
-    .row:not(.header) {
-        margin: auto;
-        max-width: 80%;
-    }
+  .row:not(.header) {
+    margin: auto;
+    max-width: 80%;
+  }
 }
 
-
 @media (min-width: 700px) {
-    .row:not(.header) {
-        margin: auto;
-        max-width: 50%;
-    }
+  .row:not(.header) {
+    margin: auto;
+    max-width: 50%;
+  }
+}
+
+.widescreen {
+  .row {
+    margin: 0;
+    max-width: 100%;
+    transition: width 0.5s;
+  }
+
+  &.teams {
+    max-height: 80vh;
+    overflow: auto;
+  }
 }

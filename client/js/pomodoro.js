@@ -60,6 +60,12 @@ Template.pomodoro.helpers({
             return user.profile.name;
         }
         return this.from;
+    },
+    rowClass() {
+        return Session.get("isWideScreen") ? "col-xs-6 widescreen" : "col-xs-12";
+    },
+    wideScreen() {
+        return Session.get("isWideScreen");
     }
 });
 
@@ -79,6 +85,10 @@ Template.pomodoro.events({
 
 Template.pomodoro.onRendered(()=> {
     renderPomodoroPie();
+    const determineWideScreen = () => {
+        Session.set("isWideScreen", window.innerWidth >= 700);
+    };
+    $(window).on('resize', _.debounce(determineWideScreen, 100));
 });
 
 

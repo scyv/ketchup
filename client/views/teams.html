@@ -5,17 +5,16 @@
         {{#each teams}}
             <div class="row">
                 <div class="col-xs-12">
-                    <h1>{{name}}</h1>
                     <button class="btn btn-link btn-leave-team pull-right">
                         <i class="glyphicon glyphicon-remove"></i> Team Verlassen
                     </button>
                     {{#if isTeamOwner}}
                         <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</button>
                     {{/if}}
+                    <h1>{{name}}</h1>
                     {{#if membersLoading}}
                         <p class="text-center">Laden...</p>
                     {{else}}
-                        <h4>Mitglieder</h4>
                         <ul class="list-group">
                             {{#each members}}
                                 {{#each runningPomodoro}}

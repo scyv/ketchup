@@ -1,4 +1,5 @@
 <template name="pomodoro">
+    <div class="{{rowClass}}">
     <div class="row">
         <div class="col-xs-12 text-center">
             <div class="pie"></div>
@@ -11,35 +12,41 @@
             </div>
         </div>
     {{else}}
-        <div class="row timer">
-            <div class="col-xs-12 text-center">
-                {{#if runningPomodoro}}
-                    {{#with runningPomodoro}}
-                        <button class="btn btn-lg btn-interrupt btn-danger">
-                            <i class="glyphicon glyphicon-stop"></i> Unterbrechen
+            <div class="row timer">
+                <div class=" text-center">
+                    {{#if runningPomodoro}}
+                        {{#with runningPomodoro}}
+                            <button class="btn btn-lg btn-interrupt btn-danger">
+                                <i class="glyphicon glyphicon-stop"></i> Unterbrechen
+                            </button>
+                        {{/with}}
+                    {{else}}
+                        <button class="btn btn-lg btn-start btn-success">
+                            <i class="glyphicon glyphicon-play"></i> Starten
                         </button>
-                    {{/with}}
-                {{else}}
-                    <button class="btn btn-lg btn-start btn-success">
-                        <i class="glyphicon glyphicon-play"></i> Starten
-                    </button>
-                {{/if}}
+                    {{/if}}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <ul class="list-group">
-                    {{#each subscriptions}}
-                        <li class="list-group-item list-group-item-warning">
-                            <i class="pull-right glyphicon glyphicon-remove clickable btn-remove-subscription"></i>
-                            <i class="glyphicon glyphicon-bullhorn pull-left"></i> Anfrage von: {{from}}
-                        </li>
-                    {{/each}}
-                    <li class="list-group-item">Pomodoros heute: {{pomodoroCountToday}}</li>
-                    <li class="list-group-item">Unterbrechungen heute: {{interruptionsToday}}</li>
-                    <li class="list-group-item">Pomodoros insgesamt: {{pomodoroCount}}</li>
-                </ul>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <ul class="list-group">
+                        {{#each subscriptions}}
+                            <li class="list-group-item list-group-item-warning">
+                                <i class="pull-right glyphicon glyphicon-remove clickable btn-remove-subscription"></i>
+                                <i class="glyphicon glyphicon-bullhorn pull-left"></i> Anfrage von: {{from}}
+                            </li>
+                        {{/each}}
+                        <li class="list-group-item">Pomodoros heute: {{pomodoroCountToday}}</li>
+                        <li class="list-group-item">Unterbrechungen heute: {{interruptionsToday}}</li>
+                        <li class="list-group-item">Pomodoros insgesamt: {{pomodoroCount}}</li>
+                    </ul>
+                </div>
             </div>
+    {{/if}}
+    </div>
+    {{#if wideScreen}}
+        <div class="col-xs-6 widescreen teams">
+            {{> teams}}
         </div>
     {{/if}}
 </template>

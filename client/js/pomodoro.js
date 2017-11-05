@@ -89,6 +89,7 @@ Template.pomodoro.onRendered(()=> {
         Session.set("isWideScreen", window.innerWidth >= 700);
     };
     $(window).on('resize', _.debounce(determineWideScreen, 100));
+    determineWideScreen();
 });
 
 

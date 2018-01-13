@@ -40,6 +40,14 @@ Router.route("/settings", function () {
     }
 }, {name: "settings"});
 
+Router.route("/charts", function () {
+    if (Meteor.userId()) {
+        this.render("charts");
+    } else {
+        this.render("login");
+    }
+}, {name: "charts"});
+
 
 Router.route("/resetPasswordMailSent", function () {
     this.render("resetPasswordMailSent")

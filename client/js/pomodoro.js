@@ -121,7 +121,7 @@ function checkOvertime(values) {
     if (values.timeRunning > runningPomodoro.targetLength * 60 * 1000) {
         Meteor.call("stopPomodoro", "", () => {
             NotificationCenter.notifyFinished(runningPomodoro);
-            progressIndicator.finish();
+            progressIndicator.finished();
         });
     }
 }

@@ -20,9 +20,14 @@ Meteor.methods({
         checkUserLoggedIn(this);
         check(comment, String);
         const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: undefined});
+
+        // stopping within this duration before end of a pomodoro it not considered as interruption
+        const interruptionTolerance = 2000;
+
         if (runningPomodoro) {
             const now = new Date();
-            const interrupted = (now - runningPomodoro.start) < (runningPomodoro.targetLength * 60 * 1000);
+            const interrupted = (now - runningPomodoro.start) + interruptionTolerance
+                < (runningPomodoro.targetLength * 60 * 1000);
             Pomodoros.update(runningPomodoro._id, {$set: {end: now, interrupted: interrupted, comment: comment}});
         }
     },

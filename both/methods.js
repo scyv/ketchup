@@ -2,18 +2,22 @@ import { Meteor } from "meteor/meteor";
 import { Factory } from "./factory";
 import { check } from "meteor/check";
 
+function checkUserLoggedIn(ctx) {
+    if (!ctx.userId) {
+        throw Meteor.error("Unauthorized", 403);
+    }
+}
+
 Meteor.methods({
     "startPomodoro"() {
-        if (this.userId) {
-            const pomodoro = Factory.createPomodoro(this.userId);
-            pomodoro.start = new Date();
-            pomodoro.targetLength = Meteor.user().profile.settings.pomodoroLength;
-            Pomodoros.insert(pomodoro);
-        } else {
-            throw Meteor.error("Unauthorized", 403);
-        }
+        checkUserLoggedIn(this);
+        const pomodoro = Factory.createPomodoro(this.userId);
+        pomodoro.start = new Date();
+        pomodoro.targetLength = Meteor.user().profile.settings.pomodoroLength;
+        Pomodoros.insert(pomodoro);
     },
     "stopPomodoro"(comment) {
+        checkUserLoggedIn(this);
         check(comment, String);
         const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: undefined});
         if (runningPomodoro) {
@@ -23,13 +27,13 @@ Meteor.methods({
         }
     },
     "createTeam"(name) {
+        checkUserLoggedIn(this);
         check(name, String);
-        if (this.userId) {
-            const team = Factory.createTeam(name, this.userId);
-            Teams.insert(team);
-        }
+        const team = Factory.createTeam(name, this.userId);
+        Teams.insert(team);
     },
     "updateTeam"(key, name) {
+        checkUserLoggedIn(this);
         check(key, String);
         check(name, String);
         const team = Teams.findOne({owner: this.userId, key: key});
@@ -38,6 +42,7 @@ Meteor.methods({
         }
     },
     "joinTeam"(key) {
+        checkUserLoggedIn(this);
         check(key, String);
 
         const team = Teams.findOne({key: key});
@@ -46,6 +51,7 @@ Meteor.methods({
         }
     },
     "leaveTeam"(key) {
+        checkUserLoggedIn(this);
         check(key, String);
         const team = Teams.findOne({key: key});
         if (team) {
@@ -53,49 +59,37 @@ Meteor.methods({
         }
     },
     "saveSettings"(userName, email, pomodoroLength) {
+        checkUserLoggedIn(this);
         check(userName, String);
         check(email, String);
         check(pomodoroLength, Number);
 
-        if (this.userId) {
-            Meteor.users.update(this.userId, {
-                $set: {
-                    profile: {
-                        name: userName,
-                        settings: {
-                            pomodoroLength: pomodoroLength
-                        }
+        Meteor.users.update(this.userId, {
+            $set: {
+                profile: {
+                    name: userName,
+                    settings: {
+                        pomodoroLength: pomodoroLength
                     }
                 }
-            });
-        } else {
-            throw Meteor.error("Unauthorized", 403);
-        }
+            }
+        });
     },
     "createSubscription"(toUserId) {
+        checkUserLoggedIn(this);
         check(toUserId, String);
-        if (this.userId) {
-            if (!Subscriptions.findOne({from: this.userId, to: toUserId})) {
-                Subscriptions.insert({from: this.userId, to: toUserId});
-            }
-        } else {
-            throw Meteor.error("Unauthorized", 403);
+        if (!Subscriptions.findOne({from: this.userId, to: toUserId})) {
+            Subscriptions.insert({from: this.userId, to: toUserId});
         }
     },
     "removeOutgoingSubscription"(toUserId) {
+        checkUserLoggedIn(this);
         check(toUserId, String);
-        if (this.userId) {
-            Subscriptions.remove({from: this.userId, to: toUserId});
-        } else {
-            throw Meteor.error("Unauthorized", 403);
-        }
+        Subscriptions.remove({from: this.userId, to: toUserId});
     },
     "removeIncomingSubscription"(fromUserId) {
+        checkUserLoggedIn(this);
         check(fromUserId, String);
-        if (this.userId) {
-            Subscriptions.remove({from: fromUserId, to: this.userId});
-        } else {
-            throw Meteor.error("Unauthorized", 403);
-        }
+        Subscriptions.remove({from: fromUserId, to: this.userId});
     }
 });

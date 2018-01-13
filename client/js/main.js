@@ -16,7 +16,22 @@ formattedTime = function (time) {
     if (!time) {
         return "-";
     }
-    return moment.duration(time).humanize();
+    const duration = moment.duration(time);
+    const hours = duration.hours();
+    const minutes = duration.minutes() + 1;
+    let formattedTimes = "";
+    if (hours > 0) {
+        formattedTimes += hours + " Stunde";
+        if (hours > 1) {
+            formattedTimes += "n";
+        }
+        formattedTimes += ", ";
+    }
+    formattedTimes += minutes + " Minute";
+    if (minutes > 1) {
+        formattedTimes += "n";
+    }
+    return formattedTimes;
 };
 
 formattedPomodoroTime = function (time) {

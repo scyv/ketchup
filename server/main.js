@@ -26,7 +26,7 @@ Meteor.publish("pomodoros", function () {
                 pomodoroOwners = _.union(pomodoroOwners, team.members);
             });
 
-            return Pomodoros.find({owner: {$in: pomodoroOwners}}); //, {fields: {secretInfo: 0}});
+            return Pomodoros.find({owner: {$in: pomodoroOwners}, start: {$gte: moment().subtract(3, "month").toDate()}}); //, {fields: {secretInfo: 0}});
         });
     } else {
         return [];

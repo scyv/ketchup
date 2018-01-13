@@ -11,7 +11,7 @@
                     {{#if isTeamOwner}}
                         <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</button>
                     {{/if}}
-                    <h1>{{name}}</h1>
+                    <h1>{{name}}<h5 class="text-sm text-muted">{{teamPomodoroCount}} Pomodoros | {{teamPomodoroInterruptions}} Unterbrechungen</h5></h1>
                     {{#if membersLoading}}
                         <p class="text-center">Laden...</p>
                     {{else}}

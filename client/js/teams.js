@@ -43,6 +43,12 @@ Template.teams.helpers({
     },
     notSelf() {
         return this.pomodoro.owner !== Meteor.userId();
+    },
+    teamPomodoroCount() {
+        return Pomodoros.find({owner: {$in: this.members}}).count();
+    },
+    teamPomodoroInterruptions() {
+        return Pomodoros.find({owner: {$in: this.members}, interrupted: true}).count();
     }
 });
 

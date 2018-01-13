@@ -62,10 +62,10 @@ Template.pomodoro.helpers({
         return this.from;
     },
     rowClass() {
-        return Session.get("isWideScreen") ? "col-xs-6 widescreen" : "col-xs-12";
+        return Session.get("isWideScreen") && Teams.find().count() > 0 ? "col-xs-6 widescreen" : "col-xs-12";
     },
     wideScreen() {
-        return Session.get("isWideScreen");
+        return Session.get("isWideScreen") && Teams.find().count() > 0;
     }
 });
 
@@ -105,6 +105,9 @@ function renderPomodoroPie() {
 }
 
 function getFormattedTargetLength() {
+    if (!Meteor.user()) {
+        return 0;
+    }
     return formattedPomodoroTime(Meteor.user().profile.settings.pomodoroLength * 60 * 1000);
 }
 

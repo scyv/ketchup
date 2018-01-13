@@ -1,16 +1,25 @@
-Template.login.events({
-    'click #btnLogin': () => {
-        var email = $('#emailInput').val();
-        var password = $('#passwordInput').val();
+function login() {
+    var email = $('#emailInput').val();
+    var password = $('#passwordInput').val();
 
-        Meteor.loginWithPassword(email, password,  (err) => {
-            if (err) {
-                alert("Fehler: " + err, "ERROR");
-            } else {
-                Router.go('/');
-                Tracker.flush();
-            }
-        });
+    Meteor.loginWithPassword(email, password,  (err) => {
+        if (err) {
+            alert("Fehler: " + err, "ERROR");
+        } else {
+            Router.go('/');
+            Tracker.flush();
+        }
+    });
+}
+
+Template.login.events({
+    'keydown #passwordInput': (evt) => {
+      if (evt.keyCode === 13) {
+          login();
+      }
+    },
+    'click #btnLogin': () => {
+        login();
     },
     'click #btnRegister': () => {
         var email = $('#regEmailInput').val();
@@ -24,7 +33,7 @@ Template.login.events({
                 name: name,
                 settings: {
                     pomodoroLength: 25,
-                    refreshInterval: 1000,
+                    refreshInterval: 1000
                 }
             }
         };

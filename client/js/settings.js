@@ -19,7 +19,8 @@ Template.settings.events({
         const userName = $("#inputUserName").val();
         const email = $("#inputEmail").val();
         const pomodoroLength = parseInt($("#inputPomodoroLength").val(), 10);
-        Meteor.call("saveSettings", userName, email, pomodoroLength, (err)=> {
+        const refreshInterval = parseInt($("#inputRefreshInterval").val(), 10);
+        Meteor.call("saveSettings", userName, email, pomodoroLength, refreshInterval, (err)=> {
             buttonElement.disabled = false;
             if (err) {
                 alert(err);

@@ -23,7 +23,8 @@ Template.login.events({
             profile: {
                 name: name,
                 settings: {
-                    pomodoroLength: 25
+                    pomodoroLength: 25,
+                    refreshInterval: 1000,
                 }
             }
         };

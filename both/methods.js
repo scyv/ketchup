@@ -63,18 +63,20 @@ Meteor.methods({
             Teams.update(team._id, {$pullAll: {members: [this.userId]}});
         }
     },
-    "saveSettings"(userName, email, pomodoroLength) {
+    "saveSettings"(userName, email, pomodoroLength, refreshInterval) {
         checkUserLoggedIn(this);
         check(userName, String);
         check(email, String);
         check(pomodoroLength, Number);
+        check(refreshInterval, Number);
 
         Meteor.users.update(this.userId, {
             $set: {
                 profile: {
                     name: userName,
                     settings: {
-                        pomodoroLength: pomodoroLength
+                        pomodoroLength: pomodoroLength,
+                        refreshInterval: refreshInterval
                     }
                 }
             }

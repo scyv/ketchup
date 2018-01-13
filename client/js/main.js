@@ -77,6 +77,16 @@ Template.layout.events({
 
 ConnectedUsers = new Mongo.Collection("connectedUsers");
 
+function updateReactiveTimer() {
+    Session.set("reactiveTimer", Session.get("reactiveTimer") + 1);
+    let refreshInterval = 1000;
+    if (Meteor.user()) {
+        refreshInterval = Meteor.user().profile.settings.refreshInterval || refreshInterval;
+    }
+    Meteor.setTimeout(updateReactiveTimer, refreshInterval);
+}
+
+
 Meteor.startup(() => {
     moment.locale("de");
 
@@ -88,7 +98,5 @@ Meteor.startup(() => {
     connectedUsersHandle = Meteor.subscribe("connectedUsers");
 
     Session.set("reactiveTimer", 0);
-    Meteor.setInterval(function () {
-        Session.set("reactiveTimer", Session.get("reactiveTimer") + 1);
-    }, 1000);
+    updateReactiveTimer();
 });

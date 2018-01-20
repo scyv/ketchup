@@ -63,8 +63,10 @@ export class ProgressCircle {
     finished() {
         const jqParent = $(this.parentElement);
         const circleElem = jqParent.find("circle.progress");
+        const titleElem = jqParent.find("text");
         circleElem.attr("class", "progress finished");
         circleElem.attr("stroke-dasharray", "0 100");
+        titleElem.text("00:00");
     }
 
 }

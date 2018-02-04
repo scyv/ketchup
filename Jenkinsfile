@@ -1,19 +1,25 @@
 pipeline {
     agent any
 
-    dir('src') {
-        checkout scm
-    }
 
     stages {
+        stage('Checkout') {
+            dir('src') {
+                checkout scm
+            }
+        }
         stage('Npm Install') {
-            steps {
-                sh 'npm install --production'
+            dir('src') {
+                steps {
+                    sh 'npm install --production'
+                }
             }
         }
         stage('Build') {
-            steps {
-                sh 'meteor build ../build --server https://ketchup.scytec.de --verbose'
+            dir('src') {
+                steps {
+                    sh 'meteor build ../build --server https://ketchup.scytec.de --verbose'
+                }
             }
         }
     }

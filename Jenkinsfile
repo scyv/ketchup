@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    dir('src') {
+        checkout scm
+    }
+
     stages {
         stage('Npm Install') {
             steps {
@@ -9,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'meteor build .build --server https://ketchup.scytec.de --verbose'
+                sh 'meteor build ../build --server https://ketchup.scytec.de --verbose'
             }
         }
     }

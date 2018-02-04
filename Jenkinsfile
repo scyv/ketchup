@@ -4,20 +4,22 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            dir('src') {
-                checkout scm
+            steps {
+                dir('src') {
+                    checkout scm
+                }
             }
         }
         stage('Npm Install') {
-            dir('src') {
-                steps {
+            steps {
+                dir('src') {
                     sh 'npm install --production'
                 }
             }
         }
         stage('Build') {
-            dir('src') {
-                steps {
+            steps {
+                dir('src') {
                     sh 'meteor build ../build --server https://ketchup.scytec.de --verbose'
                 }
             }

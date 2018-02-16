@@ -8,7 +8,7 @@ Meteor.startup(() => {
     // Run timer to stop overtimed pomodoros
     Meteor.setInterval(function () {
         const now = new Date();
-        Pomodoros.find({end: undefined}).forEach((po) => {
+        Pomodoros.find({end: null}).forEach((po) => {
             if (now - po.start > po.targetLength * 60 * 1000) {
                 Pomodoros.update(po._id, {$set: {end: new Date(), comment: ""}});
             }
@@ -26,7 +26,7 @@ Meteor.publish("pomodoros", function () {
                 pomodoroOwners = _.union(pomodoroOwners, team.members);
             });
 
-            return Pomodoros.find({owner: {$in: pomodoroOwners}, start: {$gte: moment().subtract(3, "month").toDate()}}); //, {fields: {secretInfo: 0}});
+            return Pomodoros.find({owner: {$in: pomodoroOwners}, start: {$gte: moment().subtract(7, "day").toDate()}}); //, {fields: {secretInfo: 0}});
         });
     } else {
         return [];

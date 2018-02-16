@@ -1,15 +1,35 @@
 import { Template } from "meteor/templating";
 
+resolveTeamMembers = (key) => {
+    const memberIds = Teams.findOne({key: key}).members;
+    return memberIds.map(id =>Meteor.users.findOne(id)).sort((a, b)=> {
+        const aName = a.profile.name.toLowerCase();
+        const bName = b.profile.name.toLowerCase();
+        return aName < bName ? -1 : aName === bName ? 0 : 1;
+    });
+};
+
 Template.team.helpers({
     selectedTeam() {
         return Teams.findOne(Session.get("selectedTeam"));
     },
     saveSuccess() {
         return Session.get("settingsSaved");
+    },
+    members() {
+        return resolveTeamMembers(this.key).filter((member)=>{
+            return member._id !== Meteor.userId();
+        });
     }
 });
 
 Template.team.events({
+    "click .btn-remove-teammember"() {
+        if (confirm("Möchten Sie "+ this.profile.name +" aus dem Team entfernen?")) {
+            const team = Teams.findOne(Session.get("selectedTeam"));
+            Meteor.call("removeTeamMember", this._id, team.key);
+        }
+    },
     "click .btn-save"(evt) {
         const team = Teams.findOne(Session.get("selectedTeam"));
         const buttonElement = evt.currentTarget;

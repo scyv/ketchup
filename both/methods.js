@@ -19,7 +19,7 @@ Meteor.methods({
     "stopPomodoro"(comment) {
         checkUserLoggedIn(this);
         check(comment, String);
-        const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: undefined});
+        const runningPomodoro = Pomodoros.findOne({owner: this.userId, end: null});
 
         // stopping within this duration before end of a pomodoro it not considered as interruption
         const interruptionTolerance = 2000;
@@ -98,5 +98,16 @@ Meteor.methods({
         checkUserLoggedIn(this);
         check(fromUserId, String);
         Subscriptions.remove({from: fromUserId, to: this.userId});
+    },
+    "removeTeamMember"(memberId, teamKey) {
+        checkUserLoggedIn(this);
+        check(memberId, String);
+        check(teamKey, String);
+        const team = Teams.findOne({key: teamKey});
+        if (team && team.owner === this.userId) {
+            Teams.update(team._id, {$pullAll: {members: [memberId]}});
+        }
+
+
     }
 });

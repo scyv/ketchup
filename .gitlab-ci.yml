@@ -1,6 +1,7 @@
 # ci configuration
 stages:
   - install_meteor
+  - environment_versions
   - npm_install
   - create_bundle
 
@@ -9,10 +10,17 @@ job_install_meteor:
   script:
     - curl https://install.meteor.com/ | sh
 
+job_environment_versions:
+  stage: environment_versions
+  script:
+    - echo "NodeJS: `"$(find $HOME/.meteor/packages -name dev_bundle)"/bin/node --version`"
+    - echo "NPM: `"$(find $HOME/.meteor/packages -name dev_bundle)"/bin/npm --version`"
+    - echo "`$HOME/.meteor/meteor --version`"
+
 job_npm_install:
   stage: npm_install
   script:
-    - $HOME/.meteor/meteor npm install --production
+    - "$(find $HOME/.meteor/packages -name dev_bundle)"/bin/npm install --production
 
 job_create_bundle:
   stage: create_bundle

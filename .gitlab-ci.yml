@@ -17,7 +17,7 @@ job_npm_install:
 job_create_bundle:
   stage: create_bundle
   script:
-    - $HOME/.meteor/meteor build ./.build --server https://ketchup.scytec.de
+    - $HOME/.meteor/meteor build ./.build --server https://ketchup.scytec.de --architecture os.linux.x86_64
   artifacts:
     paths:
     - ./.build

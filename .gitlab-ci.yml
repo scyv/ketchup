@@ -12,9 +12,9 @@ job_install_meteor:
 job_npm_install:
   stage: npm_install
   script:
-    - meteor npm install --production
+    - $HOME/.meteor/meteor npm install --production
 
 job_create_bundle:
   stage: create_bundle
   script:
-    - meteor build ./.build --server https://ketchup.scytec.de
+    - $HOME/.meteor/meteor build ./.build --server https://ketchup.scytec.de

@@ -20,4 +20,4 @@ job_create_bundle:
     - $HOME/.meteor/meteor build ./.build --server https://ketchup.scytec.de
   artifacts:
     paths:
-    - ./build
+    - ./.build

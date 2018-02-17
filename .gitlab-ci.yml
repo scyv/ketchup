@@ -1,12 +1,18 @@
 # ci configuration
 stages:
+  - install_meteor
   - npm_install
   - create_bundle
+
+job_install_meteor:
+  stage: install_meteor
+  script:
+    - curl https://install.meteor.com/ | sh
 
 job_npm_install:
   stage: npm_install
   script:
-    - npm install --production
+    - meteor npm install --production
 
 job_create_bundle:
   stage: create_bundle

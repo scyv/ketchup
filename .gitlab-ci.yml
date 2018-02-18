@@ -21,8 +21,7 @@ job_environment_versions:
 job_npm_install:
   stage: npm_install
   script:
-    - PATH=$PATH:$(find $HOME/.meteor/packages -name dev_bundle)/bin
-    - npm install --production
+    - $HOME/.meteor/meteor npm install --production
 
 job_create_bundle:
   stage: create_bundle

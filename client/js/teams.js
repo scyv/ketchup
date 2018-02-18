@@ -33,12 +33,6 @@ Template.teams.helpers({
     isTeamOwner() {
         return this.owner === Meteor.userId();
     },
-    isActive() {
-        return Subscriptions.findOne({from: Meteor.userId(), to: this.pomodoro.owner}) ? "active" : "";
-    },
-    notSelf() {
-        return this.pomodoro.owner !== Meteor.userId();
-    },
     teamPomodoroCount() {
         return Pomodoros.find({owner: {$in: this.members}}).count();
     },
@@ -50,6 +44,17 @@ Template.teams.helpers({
 Template.subscriptionList.helpers({
     subscriptions() {
         return findSubscribers(this.toString());
+    }
+});
+
+Template.subscription.helpers({
+    isActive() {
+        const owner = this.pomodoro ? this.pomodoro.owner : this._id;
+        return Subscriptions.findOne({from: Meteor.userId(), to: owner}) ? "active" : "";
+    },
+    notSelf() {
+        const owner = this.pomodoro ? this.pomodoro.owner : this._id;
+        return owner !== Meteor.userId();
     }
 });
 
@@ -79,8 +84,8 @@ Template.teams.events({
         }
         return false;
     },
-    "click .btn-subscribe"(evt, templ) {
-        const owner = this.pomodoro.owner;
+    "click .btn-subscribe"() {
+        const owner = this.pomodoro ? this.pomodoro.owner : this._id;
         const btn = $(".member-" + owner + " .btn-subscribe");
         const isActive = btn.hasClass("active");
         if (isActive) {

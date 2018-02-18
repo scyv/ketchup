@@ -19,12 +19,7 @@
                             {{#each members}}
                                 {{#each runningPomodoro}}
                                     <li class="list-group-item focused member-{{../_id}}">
-                                        {{#if notSelf}}
-                                            <button class="btn btn-sm btn-danger pull-right btn-subscribe {{isActive}}"
-                                                    title="Anmelden: Teammitglied wird zu Beginn der Pause benachrichtigt.">
-                                                <i class="glyphicon glyphicon-bullhorn"></i>
-                                            </button>
-                                        {{/if}}
+                                        {{> subscription}}
                                         <h4 class="list-group-item-heading">{{../profile.name}}</h4>
                                         <div class="list-group-item-text">
                                             <span class="">Pause in {{formattedTime timeLeft}}</span>
@@ -32,7 +27,8 @@
                                         </div>
                                     </li>
                                 {{else}}
-                                    <li class="list-group-item">
+                                    <li class="list-group-item member-{{_id}}">
+                                        {{> subscription}}
                                         <h4 class="list-group-item-heading">{{profile.name}}</h4>
                                         <div class="list-group-item-text">
                                             <span>&nbsp;</span>
@@ -66,4 +62,13 @@
             <span class="label label-danger"><i class="glyphicon glyphicon-bullhorn"></i> {{.}}</span>
         {{/each}}
     </p>
+</template>
+
+<template name="subscription">
+    {{#if notSelf}}
+        <button class="btn btn-sm btn-danger pull-right btn-subscribe {{isActive}}"
+                title="Anmelden: Teammitglied wird zu Beginn der Pause benachrichtigt.">
+            <i class="glyphicon glyphicon-bullhorn"></i>
+        </button>
+    {{/if}}
 </template>

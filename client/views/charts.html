@@ -1,3 +1,20 @@
 <template name="charts">
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <!--{{> pomodorosOverall }}-->
+        {{#if pomodoroPerDayHandleReady}}
+            {{> pomodorosByDay }}
+        {{/if}}
+    <!--{{> interruptionsByDay }}-->
+</template>
+
+<template name="pomodorosByDay">
+    <h4>Pomodoros pro Wochentag</h4>
+    <canvas width="400" height="{{diagramHeight}}"></canvas>
+</template>
+<template name="interruptionsByDay">
+    <h4>Unterbrechungen pro Tag:</h4>
+    <canvas width="400" height="200"></canvas>
+</template>
+<template name="pomodorosOverall">
+    <h4>Pomodoros gesamt:</h4>
+    <canvas width="400" height="200"></canvas>
 </template>

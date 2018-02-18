@@ -5,9 +5,6 @@ stages:
   - npm_install
   - create_bundle
 
-variables:
-  NODE_PATH: $(find $HOME/.meteor/packages -name dev_bundle)/bin
-
 job_install_meteor:
   stage: install_meteor
   script:
@@ -16,6 +13,7 @@ job_install_meteor:
 job_environment_versions:
   stage: environment_versions
   script:
+    - NODE_PATH=$(find $HOME/.meteor/packages -name dev_bundle)/bin
     - $NODE_PATH/node --version
     - $NODE_PATH/node $NODE_PATH/npm --version
     - $HOME/.meteor/meteor --version
@@ -23,6 +21,7 @@ job_environment_versions:
 job_npm_install:
   stage: npm_install
   script:
+    - NODE_PATH=$(find $HOME/.meteor/packages -name dev_bundle)/bin
     - $NODE_PATH/node $NODE_PATH/npm install --production
 
 job_create_bundle:

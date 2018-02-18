@@ -13,8 +13,8 @@ job_install_meteor:
 job_environment_versions:
   stage: environment_versions
   script:
-    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/node --version
-    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/node npm --version
+    - cd $(find $HOME/.meteor/packages -name dev_bundle)/bin && ./node --version
+    - cd $(find $HOME/.meteor/packages -name dev_bundle)/bin && ./node npm --version
     - $HOME/.meteor/meteor --version
 
 job_npm_install:

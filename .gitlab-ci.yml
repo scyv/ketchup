@@ -13,17 +13,14 @@ job_install_meteor:
 job_environment_versions:
   stage: environment_versions
   script:
-    - echo NodeJS
     - $(find $HOME/.meteor/packages -name dev_bundle)/bin/node --version
-    - echo NPM
-    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/npm --version
-    - echo Meteor
+    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/node npm --version
     - $HOME/.meteor/meteor --version
 
 job_npm_install:
   stage: npm_install
   script:
-    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/npm install --production
+    - $(find $HOME/.meteor/packages -name dev_bundle)/bin/node npm install --production
 
 job_create_bundle:
   stage: create_bundle

@@ -112,11 +112,12 @@ Meteor.startup(() => {
     moment.locale("de");
 
     Tracker.autorun(() => {
-        pomodoroHandle = Meteor.subscribe("pomodoros");
-        teamsHandle = Meteor.subscribe("teams");
-        subscriptionsHandle = Meteor.subscribe(("subscriptions"));
+        const monitorKey = Session.get("monitorKey");
+        pomodoroHandle = Meteor.subscribe("pomodoros", monitorKey);
+        teamsHandle = Meteor.subscribe("teams", monitorKey);
+        subscriptionsHandle = Meteor.subscribe("subscriptions", monitorKey);
+        connectedUsersHandle = Meteor.subscribe("connectedUsers", monitorKey);
     });
-    connectedUsersHandle = Meteor.subscribe("connectedUsers");
 
     Session.set("reactiveTimer", 0);
     updateReactiveTimer();

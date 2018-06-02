@@ -3,57 +3,81 @@
         <p class="text-center">Laden...</p>
     {{else}}
         {{#each teams}}
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="btn btn-link btn-leave-team pull-right">
-                        <i class="glyphicon glyphicon-remove"></i> Team Verlassen
-                    </button>
-                    {{#if isTeamOwner}}
-                        <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</button>
-                    {{/if}}
-                    <h1>{{name}}<h5 class="text-sm text-muted">{{teamPomodoroCount}} Pomodoros | {{teamPomodoroInterruptions}} Unterbrechungen</h5></h1>
-                    {{#if membersLoading}}
-                        <p class="text-center">Laden...</p>
-                    {{else}}
-                        <ul class="list-group">
-                            {{#each members}}
-                                {{#each runningPomodoro}}
-                                    <li class="list-group-item focused member-{{../_id}}">
-                                        {{> subscription}}
-                                        <h4 class="list-group-item-heading">{{../profile.name}}</h4>
-                                        <div class="list-group-item-text">
-                                            <span class="">Pause in {{formattedTime timeLeft}}</span>
-                                            {{> subscriptionList ../_id}}
-                                        </div>
-                                    </li>
-                                {{else}}
-                                    <li class="list-group-item member-{{_id}}">
-                                        {{> subscription}}
-                                        <h4 class="list-group-item-heading">{{profile.name}}</h4>
-                                        <div class="list-group-item-text">
-                                            <span>&nbsp;</span>
-                                            {{> subscriptionList _id}}
-                                        </div>
-                                    </li>
-                                {{/each}}
-                            {{else}}
-                                <li>Nix los</li>
-                            {{/each}}
-                        </ul>
-                    {{/if}}
-                </div>
-            </div>
+            {{>teamActivity}}
             <hr/>
         {{else}}
 
         {{/each}}
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button class="btn btn-success btn-create-team"><i class="glyphicon glyphicon-plus"></i> Team erstellen</button>
-                <button class="btn btn-primary btn-join-team"><i class="glyphicon glyphicon-user"></i> Team beitreten</button>
+                <button class="btn btn-success btn-create-team"><i class="glyphicon glyphicon-plus"></i> Team erstellen
+                </button>
+                <button class="btn btn-primary btn-join-team"><i class="glyphicon glyphicon-user"></i> Team beitreten
+                </button>
             </div>
         </div>
     {{/if}}
+</template>
+
+<template name="teamMonitor">
+    {{#if teamsLoading}}
+        <p class="text-center">Laden...</p>
+    {{else}}
+        {{#each teams}}
+            {{>teamActivity}}
+            <hr/>
+        {{/each}}
+    {{/if}}
+</template>
+
+<template name="teamActivity">
+    <div class="row">
+        <div class="col-xs-12">
+            {{#if currentUser}}
+                <button class="btn btn-link btn-leave-team pull-right">
+                    <i class="glyphicon glyphicon-remove"></i> Team Verlassen
+                </button>
+                {{#if isTeamOwner}}
+                    <button class="btn btn-link btn-edit-team pull-right"><i class="glyphicon glyphicon-edit"></i>
+                        Bearbeiten
+                    </button>
+                {{/if}}
+            {{/if}}
+            <h1>{{name}}<h5 class="text-sm text-muted">{{teamPomodoroCount}} Pomodoros | {{teamPomodoroInterruptions}}
+                Unterbrechungen</h5></h1>
+            {{#if membersLoading}}
+                <p class="text-center">Laden...</p>
+            {{else}}
+                <ul class="list-group">
+                    {{#each members}}
+                        {{#each runningPomodoro}}
+                            <li class="list-group-item focused member-{{../_id}}">
+                                {{> subscription}}
+                                <h4 class="list-group-item-heading">{{../profile.name}}</h4>
+
+                                <div class="list-group-item-text">
+                                    <span class="">Pause in {{formattedTime timeLeft}}</span>
+                                    {{> subscriptionList ../_id}}
+                                </div>
+                            </li>
+                        {{else}}
+                            <li class="list-group-item member-{{_id}}">
+                                {{> subscription}}
+                                <h4 class="list-group-item-heading">{{profile.name}}</h4>
+
+                                <div class="list-group-item-text">
+                                    <span>&nbsp;</span>
+                                    {{> subscriptionList _id}}
+                                </div>
+                            </li>
+                        {{/each}}
+                    {{else}}
+                        <li>Nix los</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+        </div>
+    </div>
 </template>
 
 <template name="subscriptionList">

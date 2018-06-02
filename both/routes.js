@@ -32,6 +32,11 @@ Router.route("/team", function () {
     }
 }, {name: "team"});
 
+Router.route("/monitor/:monitorKey", function () {
+    Session.set("monitorKey", this.params.monitorKey);
+    this.render("teamMonitor");
+}, {name: "monitor"});
+
 Router.route("/settings", function () {
     if (Meteor.userId()) {
         this.render("settings");

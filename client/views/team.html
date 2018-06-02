@@ -10,6 +10,10 @@
                 <input type="text" disabled="disabled" class="form-control" id="inputKey" placeholder="Teilen Sie diesen Schlüssel an Kollegen zum Beitritt in das Team" value="{{key}}">
             </div>
             <div class="form-group">
+                <label for="monitorLink">Monitorlink</label><p class="text-muted">Dieser Link zeigt die Aktivitäten des Teams (nur Lesen, für Monitoring)</p>
+                <input type="text" disabled="disabled" class="form-control" id="monitorLink" value="{{urlFor route='monitor' monitorKey=key}}">
+            </div>
+            <div class="form-group">
                 <label>Teammitglieder</label>
                 <div class="list-group">
                     {{#each members}}

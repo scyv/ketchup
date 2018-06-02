@@ -9,7 +9,19 @@ Template.teams.helpers({
     },
     teams() {
         return Teams.find();
+    }
+});
+
+Template.teamMonitor.helpers({
+    teamsLoading() {
+        return !teamsHandle.ready();
     },
+    teams() {
+        return Teams.find();
+    }
+});
+
+Template.teamActivity.helpers({
     membersLoading() {
         return !connectedUsersHandle.ready()
             || !pomodoroHandle.ready();
@@ -24,7 +36,7 @@ Template.teams.helpers({
             return [{
                 pomodoro: runningPomodoro,
                 timeLeft: moment(0).add(runningPomodoro.targetLength, "minutes")
-                - moment(new Date() - runningPomodoro.start),
+                    - moment(new Date() - runningPomodoro.start),
                 subscriptions: findSubscribers(this._id)
             }];
         }
@@ -70,7 +82,10 @@ Template.teams.events({
             Meteor.call("createTeam", name);
         }
         return false;
-    },
+    }
+});
+
+Template.teams.events({
     "click .btn-join-team"() {
         const key = prompt("Key");
         if (key) {
@@ -99,6 +114,10 @@ Template.teams.events({
 
 function findSubscribers(userId) {
     return Subscriptions.find({to: userId}).map((sub) => {
-        return Meteor.users.findOne(sub.from).profile.name;
+        const from = Meteor.users.findOne(sub.from);
+        if (!from) {
+            return "";
+        }
+        return from.profile.name;
     });
 }

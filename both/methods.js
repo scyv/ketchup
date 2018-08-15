@@ -9,11 +9,11 @@ function checkUserLoggedIn(ctx) {
 }
 
 Meteor.methods({
-    "startPomodoro"() {
+    "startPomodoro"(customLength) {
         checkUserLoggedIn(this);
         const pomodoro = Factory.createPomodoro(this.userId);
         pomodoro.start = new Date();
-        pomodoro.targetLength = Meteor.user().profile.settings.pomodoroLength;
+        pomodoro.targetLength = customLength || Meteor.user().profile.settings.pomodoroLength;
         Pomodoros.insert(pomodoro);
     },
     "stopPomodoro"(comment) {

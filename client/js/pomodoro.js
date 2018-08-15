@@ -38,19 +38,6 @@ Template.pomodoro.helpers({
         }
         return undefined;
     },
-    pomodoroCountToday() {
-        return Pomodoros.find({owner: Meteor.userId(), start: {$gte: moment().startOf("day").toDate()}}).count();
-    },
-    interruptionsToday() {
-        return Pomodoros.find({
-            owner: Meteor.userId(),
-            start: {$gte: moment().startOf("day").toDate()},
-            interrupted: true
-        }).count();
-    },
-    pomodoroCount() {
-        return Pomodoros.find({owner: Meteor.userId()}).count();
-    },
     subscriptions() {
         return Subscriptions.find({to: Meteor.userId()});
     },

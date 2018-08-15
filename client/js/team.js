@@ -1,13 +1,11 @@
 import { Template } from "meteor/templating";
 
 resolveTeamMembers = (key) => {
-    console.log("resolve team", key);
     const team = Teams.findOne({key: key});
     if (!team) {
         return [];
     }
     const memberIds = team.members;
-    console.log(memberIds);
     return memberIds.map(id => Meteor.users.findOne(id)).sort((a, b)=> {
         const aName = a.profile.name.toLowerCase();
         const bName = b.profile.name.toLowerCase();

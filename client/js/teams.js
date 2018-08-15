@@ -14,6 +14,10 @@ Template.teams.helpers({
 
 Template.teamMonitor.helpers({
     teamsLoading() {
+        if (!teamsHandle.ready()) {
+            // hack for safari
+            Session.get("reactiveTimer");
+        }
         return !teamsHandle.ready();
     },
     teams() {
@@ -44,12 +48,6 @@ Template.teamActivity.helpers({
     },
     isTeamOwner() {
         return this.owner === Meteor.userId();
-    },
-    teamPomodoroCount() {
-        return Pomodoros.find({owner: {$in: this.members}}).count();
-    },
-    teamPomodoroInterruptions() {
-        return Pomodoros.find({owner: {$in: this.members}, interrupted: true}).count();
     }
 });
 

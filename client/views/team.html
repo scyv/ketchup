@@ -19,16 +19,15 @@
                 <label for="monitorLink">Monitorlink</label><p class="text-muted">Dieser Link zeigt die Aktivitäten des Teams (nur Lesen, für Monitoring)</p>
                 <input type="text" disabled="disabled" class="form-control" id="monitorLink" value="{{urlFor route='monitor' monitorKey=key}}">
             </div>
+            {{#if isTeamOwner}}
             <div class="form-group">
                 <label>Teammitglieder</label>
                 <div class="list-group">
                     {{#each members}}
                         <div class="list-group-item">
-                           {{#if isTeamOwner}}
                             <div class="pull-right">
                                 <i class="glyphicon glyphicon-remove clickable btn-remove-teammember" title="{{profile.name}} aus dem Team entfernen."></i>
                             </div>
-                           {{/if}}
                             {{profile.name}}
                         </div>
                     {{else}}
@@ -36,7 +35,6 @@
                     {{/each}}
                 </div>
             </div>
-            {{#if isTeamOwner}}
             <button type="submit" class="btn btn-default btn-save">
                 {{#if saveSuccess}}
                     <i class="glyphicon glyphicon-ok save-success"></i>

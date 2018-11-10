@@ -20,6 +20,9 @@ Template.team.helpers({
     saveSuccess() {
         return Session.get("settingsSaved");
     },
+    isTeamOwner() {
+        return this.owner === Meteor.userId();
+    },
     members() {
         return resolveTeamMembers(this.key).filter((member)=> {
             return member._id !== Meteor.userId();

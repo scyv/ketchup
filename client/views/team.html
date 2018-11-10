@@ -1,10 +1,16 @@
 <template name="team">
     {{#with selectedTeam}}
         <form>
+            {{#if isTeamOwner}}
             <div class="form-group">
                 <label for="inputTeamName">Teamname</label>
                 <input type="text" class="form-control" id="inputTeamName" placeholder="Der Name des Teams" value="{{name}}">
             </div>
+            {{else}}
+                <div class="form-group">
+                    <label>Teamname: {{name}}</label>
+                </div>
+            {{/if}}
             <div class="form-group">
                 <label for="inputKey">Beitrittsschlüssel</label><p class="text-muted">Teilen Sie diesen Schlüssel an Kollegen zum Beitritt in das Team</p>
                 <input type="text" disabled="disabled" class="form-control" id="inputKey" placeholder="Teilen Sie diesen Schlüssel an Kollegen zum Beitritt in das Team" value="{{key}}">
@@ -18,9 +24,11 @@
                 <div class="list-group">
                     {{#each members}}
                         <div class="list-group-item">
+                           {{#if isTeamOwner}}
                             <div class="pull-right">
                                 <i class="glyphicon glyphicon-remove clickable btn-remove-teammember" title="{{profile.name}} aus dem Team entfernen."></i>
                             </div>
+                           {{/if}}
                             {{profile.name}}
                         </div>
                     {{else}}
@@ -28,6 +36,7 @@
                     {{/each}}
                 </div>
             </div>
+            {{#if isTeamOwner}}
             <button type="submit" class="btn btn-default btn-save">
                 {{#if saveSuccess}}
                     <i class="glyphicon glyphicon-ok save-success"></i>
@@ -36,6 +45,7 @@
                 {{/if}}
                 Speichern
             </button>
+            {{/if}}
             <button type="submit" class="btn btn-link btn-cancel"><i class="glyphicon glyphicon-remove"></i> Zurück</button>
         </form>
     {{/with}}
